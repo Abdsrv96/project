@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 # Application definition
 
@@ -49,6 +51,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+AUTH_USER_MODEL = 'users.User'
 
 ROOT_URLCONF = 'project.urls'
 
@@ -121,3 +125,21 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+import cloudinary	
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dzfigo7om',
+    'API_KEY': '735856269743526',
+    'API_SECRET': 'KFeoaSb1fROTFeFQln8orr8GIuA',
+}
+
+cloudinary.config( 
+  	cloud_name = CLOUDINARY_STORAGE['CLOUD_NAME'],
+  	api_key = CLOUDINARY_STORAGE['API_KEY'],
+  	api_secret = CLOUDINARY_STORAGE['API_SECRET']
+)
+
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
