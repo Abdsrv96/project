@@ -1,0 +1,50 @@
+{% extends 'users/navigate.html' %}
+{% block title %}Детали объявления{% endblock %}
+
+{% block content %}
+<main style="margin-bottom: 30px">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <h2 class="mb-4 text-center" style="color: white">{{ ad.title }}</h2>
+                <div class="card shadow rounded">
+                    {% if ad.image %}
+                        <img src="{{ ad.image.url }}" class="card-img-top rounded-top" alt="{{ ad.title }}" style="object-fit: cover; height: 350px;">
+                    {% else %}
+                        <img src="https://via.placeholder.com/800x350" class="card-img-top" alt="Нет фото">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title mb-3 text-primary">Описание</h5>
+                        <p class="card-text">{{ ad.description }}</p>
+
+                        <ul class="list-group list-group-flush mb-3">
+                            <li class="list-group-item"><strong>Цена:</strong> {{ ad.price|floatformat:0 }} ₸</li>
+                            <li class="list-group-item"><strong>Тип недвижимости:</strong> {{ ad.get_property_type_display }}</li>
+                            <li class="list-group-item"><strong>Местоположение:</strong> {{ ad.location }}</li>
+                            <li class="list-group-item"><strong>Статус:</strong> {{ ad.get_status_display }}</li>
+                            <li class="list-group-item"><strong>Площадь:</strong> {{ ad.area }} м²</li>
+                            <li class="list-group-item"><strong>Комнат:</strong> {{ ad.rooms }}</li>
+                            <li class="list-group-item"><strong>Адрес:</strong> {{ ad.address }}</li>
+                        </ul>
+
+                        <div class="mb-3">
+                            <h6 class="text-secondary">Контактная информация</h6>
+                            <p><strong>Имя:</strong> {{ ad.user.first_name }}</p>
+                            <p><strong>Номер телефона:</strong> {{ ad.user.phone_number }}</p>
+                            <p><strong>Email:</strong> {{ ad.user.email }}</p>
+                        </div>
+                    </div>
+
+                    {% if request.user.is_authenticated  %}
+                        <div class="card-footer d-flex justify-content-between">
+                            <a class="btn btn-info w-50 me-2" href="{% url 'ad_edit' ad.id %}">Редактировать</a>
+                            <a class="btn btn-danger w-50" href="{% url 'ad_delete' ad.id %}">Удалить</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+

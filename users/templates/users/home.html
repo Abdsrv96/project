@@ -3,19 +3,28 @@
 {% block title %}Главная{% endblock %}
 
 {% block content %}
-<div class="container mt-4" style="color: white;" >
-  <h1>Добро пожаловать на наш сайт)))</h1>
-  <p>Здесь вы увидите много всего (но это не точно)</p>
-
-  <div class="auth-links mt-4">
-    {% if user.is_authenticated %}
-    <p>Привет, {{ user.first_name }}! <a href="{% url 'logout' %}">Выйти из аккаунта</a></p>
-    {% else %}
-    <p>
-      <a href="{% url 'login' %}">Войти</a> |
-      <a href="{% url 'register' %}">Зарегистрироваться</a>
-    </p>
-    {% endif %}
+<!-- Отображение всех объявлений -->
+<div class="container mt-5" style="color: white">
+  <h2 class="mb-4">Все объявления</h2>
+  <div class="row">
+    {% for ad in ads %}
+    <div class="col-md-4 mb-4">
+      <div class="card" style="border-radius: 10px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        {% if ad.image %}
+        <img src="{{ ad.image.url }}" class="card-img-top" alt="{{ ad.title }}" style="height: 200px; object-fit: cover;">
+        {% else %}
+        <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Нет фото" style="height: 200px; object-fit: cover;">
+        {% endif %}
+        <div class="card-body" style="background-color: #343a40; color: white;">
+          <h5 class="card-title" style="font-weight: 600;">{{ ad.title }}</h5>
+          <p class="card-text" style="font-size: 14px;">{{ ad.description|slice:":100" }}...</p>
+          <a href="{% url 'detail' ad.id %}" class="btn btn-primary" style="background-color: #FF5733; border: none; width: 100%;">Подробнее</a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p>Нет объявлений для отображения.</p>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}
