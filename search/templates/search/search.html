@@ -1,0 +1,75 @@
+{% extends "navigate.html" %}
+
+{% block content %}
+<div class="container mt-5" style="color: white">
+  <!-- Заголовок -->
+  <h2 class="mb-4 text-center">Поиск и фильтрация объявлений</h2>
+
+  <!-- Форма фильтрации -->
+  <form method="get" action="{% url 'search' %}">
+    <div class="row g-3 align-items-end">
+
+      <div class="col-md-3">
+        {{ form.q.label_tag }}
+        {{ form.q }}
+      </div>
+
+      <div class="col-md-3">
+        {{ form.property_type.label_tag }}
+        {{ form.property_type }}
+      </div>
+
+      <div class="col-md-3">
+        {{ form.location.label_tag }}
+        {{ form.location }}
+      </div>
+
+      <div class="col-md-2">
+        {{ form.min_price.label_tag }}
+        {{ form.min_price }}
+      </div>
+
+      <div class="col-md-2">
+        {{ form.max_price.label_tag }}
+        {{ form.max_price }}
+      </div>
+
+      <div class="col-md-3">
+        {{ form.ordering.label_tag }}
+        {{ form.ordering }}
+      </div>
+
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Применить</button>
+      </div>
+
+    </div>
+  </form>
+
+  <!-- Результаты -->
+  <div class="mt-5" style="color: white">
+    <h4>Результаты</h4>
+    {% if ads %}
+      <div class="row">
+        {% for ad in ads %}
+          <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+              {% if ad.image %}
+                <img src="{{ ad.image.url }}" class="card-img-top" alt="{{ ad.title }}" style="object-fit: cover; width: 100%; height: 250px;">
+              {% endif %}
+              <div class="card-body">
+                <h5 class="card-title">{{ ad.title }}</h5>
+                <p class="card-text">{{ ad.description|truncatechars:100 }}</p>
+                <p class="text-muted">{{ ad.price }} ₸ • {{ ad.location }}</p>
+                <a href="{% url 'detail' ad.pk %}" class="btn btn-outline-primary w-100">Подробнее</a>
+              </div> 
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-warning mt-3">Объявления не найдены</div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
