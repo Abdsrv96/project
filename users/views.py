@@ -95,15 +95,3 @@ def edit_avatar(request):
 
 
 
-
-@login_required
-def toggle_role(request):
-    user = request.user
-    if user.role == 'user':
-        user.role = 'seller'
-        messages.success(request, "Вы стали продавцом!")
-    else:
-        user.role = 'user'
-        messages.success(request, "Вы снова обычный пользователь.")
-    user.save()
-    return redirect('home')
