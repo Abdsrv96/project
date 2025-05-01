@@ -4,7 +4,6 @@ from .models import Ad
 from django.views.generic import DetailView, UpdateView, DeleteView
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden
 
 
 
@@ -16,20 +15,20 @@ def foreigner_ad_list(request):
 
 
 
+from django.shortcuts import redirect
 
 def my_ads(request):
-    # if request.user.role != 'seller':
-    #     return HttpResponseForbidden("Только продавцы могут просматривать свои объявления.")
+    if not request.user.is_authenticated:
+        return redirect('login')  # Перенаправить на страницу входа
     ads = Ad.objects.filter(user=request.user)
     return render(request, 'ads/my_ads.html', {'ads': ads})
 
 
 
 
+
 @login_required(login_url='login')
 def create_ad(request):
-    # if request.user.role != 'seller':
-    #     return HttpResponseForbidden("Только продавцы могут создавать объявления.")
     if request.method == 'POST':
         form = AdForm(request.POST, request.FILES)
         if form.is_valid():
@@ -66,7 +65,6 @@ class AdDeleteView(DeleteView):
     
     def get_queryset(self):
         return Ad.objects.filter(user=self.request.user)
-
 
 
 

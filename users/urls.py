@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import register_page, login_page, logout_page, profile, delete_account, edit_avatar, toggle_role, ProfileUpdateView
+from .views import register_page, login_page, logout_page, profile, delete_account, edit_avatar, ProfileUpdateView
 
 
 urlpatterns = [
@@ -10,7 +10,6 @@ urlpatterns = [
     path('edit_profile/', ProfileUpdateView.as_view(), name='edit_profile'),
     path('delete/', delete_account, name='delete'),
     path('avatar/', edit_avatar, name='avatar'),
-    path('toggle_role/', toggle_role, name='toggle_role'),
 ]
 
 

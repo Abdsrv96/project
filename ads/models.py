@@ -24,7 +24,7 @@ class Ad(models.Model):
     image = CloudinaryField('Изображение', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Автор")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, verbose_name="Автор")
     location = models.CharField(max_length=255, verbose_name="Местоположение", blank=True, null=True)
     property_type = models.CharField(max_length=20, choices=PROPERTY_TYPES)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
