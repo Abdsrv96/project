@@ -12,7 +12,7 @@ from django.http import HttpResponseForbidden
 
 def foreigner_ad_list(request):
     ads = Ad.objects.exclude(user=request.user) if request.user.is_authenticated else Ad.objects.all()
-    return render(request, 'users/home.html', {'ads': ads})
+    return render(request, 'home.html', {'ads': ads})
 
 
 

@@ -1,10 +1,10 @@
 from django.contrib import admin
 from django.urls import path, include
-from users.views import home
+from ads.views import foreigner_ad_list
 
 
 urlpatterns = [
-    path('', home, name='home'),
+    path('', foreigner_ad_list, name='home'),
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('ads/', include('ads.urls')),
