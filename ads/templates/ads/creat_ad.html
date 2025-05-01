@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание объявления</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #232A3C;
+            font-family: Arial, sans-serif;
+        }
+        .form-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #212529; 
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: white; /* Белый цвет текста */
+        }
+        .btn-white {
+            background-color: #232A3C;
+            color: #fff;
+            font-weight:600;
+            border: none;
+            width: 100%;
+        }
+        .btn-white:hover {
+            background-color:  #0d6efd;
+            color: #fff;
+        }
+        .form-label {
+            color: white; /* Белый цвет для подписей */
+        }
+        .invalid-feedback {
+            color: red; /* Красный цвет для ошибок */
+        }
+    </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2 class="text-center mb-4">Создание объявления</h2>
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger" role="alert">
+        {% for error in form.non_field_errors %}
+        <div>{{ error }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <label for="title" class="form-label">Заголовок</label>
+        <input type="text" id="title" name="title"
+               class="form-control{% if form.title.errors %} is-invalid{% endif %}"
+               value="{{ form.title.value|default:'' }}" required>
+        {% for error in form.title.errors %}
+          <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Описание</label>
+        <textarea id="description" name="description" rows="4"
+                  class="form-control{% if form.description.errors %} is-invalid{% endif %}"
+                  required>{{ form.description.value|default:'' }}</textarea>
+        {% for error in form.description.errors %}
+          <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="mb-3">
+        <label for="price" class="form-label">Цена</label>
+        <input type="number" id="price" name="price"
+               class="form-control{% if form.price.errors %} is-invalid{% endif %}"
+               value="{{ form.price.value|default:'' }}" required>
+        {% for error in form.price.errors %}
+          <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="mb-3">
+        <label for="property_type" class="form-label">Тип недвижимости</label>
+        <select id="property_type" name="property_type"
+                class="form-control{% if form.property_type.errors %} is-invalid{% endif %}" required>
+          <option value="">Выберите тип</option>
+          {% for value, label in form.property_type.field.choices %}
+            <option value="{{ value }}" {% if form.property_type.value == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+        {% for error in form.property_type.errors %}
+          <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="mb-3">
+        <label for="location" class="form-label">Местоположение</label>
+        <select id="location" name="location"
+                class="form-control{% if form.location.errors %} is-invalid{% endif %}">
+          <option value="">Выберите местоположение</option>
+          {% for value, label in form.location.field.choices %}
+            <option value="{{ value }}" {% if form.location.value == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+        {% for error in form.location.errors %}
+          <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="mb-3">
+        <label for="image" class="form-label">Изображение</label>
+        <input type="file" id="image" name="image" class="form-control{% if form.image.errors %} is-invalid{% endif %}">
+        {% for error in form.image.errors %}
+          <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="mb-3">
+        <label for="area" class="form-label">Площадь</label>
+        <input type="text" id="area" name="area"
+               class="form-control{% if form.area.errors %} is-invalid{% endif %}"
+               value="{{ form.area.value|default:'' }}" required>
+        {% for error in form.area.errors %}
+          <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="mb-3">
+        <label for="rooms" class="form-label">Кол-во комнат</label>
+        <input type="text" id="rooms" name="rooms"
+               class="form-control{% if form.rooms.errors %} is-invalid{% endif %}"
+               value="{{ form.rooms.value|default:'' }}" required>
+        {% for error in form.rooms.errors %}
+          <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="mb-3">
+        <label for="address" class="form-label">Адрес</label>
+        <input type="text" id="address" name="address"
+               class="form-control{% if form.address.errors %} is-invalid{% endif %}"
+               value="{{ form.address.value|default:'' }}" required>
+        {% for error in form.address.errors %}
+          <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="mb-3">
+        <label for="sale_or_rent" class="form-label">Тип сделки</label>
+        <select id="sale_or_rent" name="sale_or_rent"
+                class="form-control{% if form.sale_or_rent.errors %} is-invalid{% endif %}" required>
+          <option value="">Выберите тип</option>
+          {% for value, label in form.sale_or_rent.field.choices %}
+            <option value="{{ value }}" {% if form.sale_or_rent.value == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+        {% for error in form.sale_or_rent.errors %}
+          <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="mb-3">
+        <label for="status" class="form-label">Статус объявления</label>
+        <select id="status" name="status"
+                class="form-control{% if form.status.errors %} is-invalid{% endif %}" required>
+          <option value="">Выберите статус</option>
+          {% for value, label in form.status.field.choices %}
+            <option value="{{ value }}" {% if form.status.value == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+        {% for error in form.status.errors %}
+          <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <button href="{% url 'my_ads' %}" type="submit" class="btn btn-white w-100">Создать объявление</button>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

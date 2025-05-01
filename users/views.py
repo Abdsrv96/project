@@ -9,11 +9,6 @@ from django.urls import reverse_lazy
 from .models import User
 
 
-
-def home(request):
-    return render(request, 'users/home.html')
-
-
 # Страница регистрации
 def register_page(request):
     if request.method == "POST":

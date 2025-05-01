@@ -1,0 +1,27 @@
+{% extends 'navigate.html' %}
+{% block title %}Мои объявления{% endblock %}
+
+{% block content %}
+<div class="container mt-4" style="color: white">
+    <h2 class="mb-4">Мои объявления</h2>
+    <div class="row">
+        {% for ad in ads %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                {% if ad.image %}
+                <img src="{{ ad.image.url }}" class="card-img-top" alt="{{ ad.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ ad.title }}</h5>
+                    <p class="card-text">{{ ad.description|truncatechars:100 }}</p>
+                    <a href="{% url 'detail' ad.id %}" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>У вас пока нет объявлений.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
