@@ -3,6 +3,22 @@
 {% block title %}Главная{% endblock %}
 
 {% block content %}
+<div class="container mt-5" style="color: white">
+  <h2 class="mb-4">Поиск объявлений</h2>
+  <div class="d-flex">
+    <form method="get" action="{% url 'search' %}" class="me-2 w-100">
+      <div class="input-group mb-3">
+        <input type="text" name="q" class="form-control" value="{{ request.GET.q }}">
+        <button class="btn btn-primary" type="submit">Найти</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+
 <!-- Отображение всех объявлений -->
 <div class="container mt-5" style="color: white">
   <h2 class="mb-4">Все объявления</h2>
