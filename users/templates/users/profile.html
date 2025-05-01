@@ -1,0 +1,52 @@
+{% extends 'users/navigate.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="profile-container mx-auto">
+        <div class="d-flex flex-column align-items-center mb-4">
+            {% if user.avatar %}
+                <img src="{{ user.avatar.url }}" alt="Аватар" class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+            {% else %}
+                <img src="https://res.cloudinary.com/dzfigo7om/image/upload/v1746096658/f4dc32c0674f03a43f892aab59d58abd_i3osb1.jpg" alt="Аватар по умолчанию" class="rounded-circle mb-3" style="width: 150px; height: 150; object-fit: cover;">
+            {% endif %}
+            <a href="{% url 'avatar' %}" class="btn btn-dark w-20">Обновить аватар</a>
+        </div>
+
+        <h2 class="mb-4">Профиль пользователя</h2>
+        <p><strong>Имя:</strong> {{ user.first_name }}</p>
+        <p><strong>Фамилия:</strong> {{ user.last_name }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Телефон:</strong> {{ user.phone_number }}</p>
+
+        <div class="d-flex gap-2 mt-4">
+            <a href="{% url 'edit_profile' %}" class="btn btn-dark w-50">Редактировать</a>
+            <form action="{% url 'delete' %}" method="post" class="w-50">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-dark w-100">Удалить аккаунт</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #232A3C;
+    }
+    .profile-container {
+        color: white;
+        max-width: 600px;
+        background-color: #212529;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .btn-dark {
+        background-color: #232A3C;
+        color: #fff;
+    }
+    .btn-dark:hover {
+        background-color:  #0d6efd;
+        color: #fff;
+    }
+</style>
+{% endblock %}
