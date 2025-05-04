@@ -9,4 +9,5 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('ads/', include('ads.urls')),
     path('search/', include('search.urls')),
+    path('favorites/', include('favorites.urls')),
 ]

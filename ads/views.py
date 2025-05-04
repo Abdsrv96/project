@@ -15,16 +15,12 @@ def foreigner_ad_list(request):
 
 
 
-from django.shortcuts import redirect
 
 def my_ads(request):
     if not request.user.is_authenticated:
         return redirect('login')  # Перенаправить на страницу входа
     ads = Ad.objects.filter(user=request.user)
     return render(request, 'ads/my_ads.html', {'ads': ads})
-
-
-
 
 
 @login_required(login_url='login')

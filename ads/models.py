@@ -38,7 +38,7 @@ class Ad(models.Model):
         return self.title
     
     def get_absolute_url(self):
-        return f'/accounts/{self.id}'
+        return f'/users/{self.id}'
     
 
     class Meta:

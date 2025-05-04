@@ -1,0 +1,37 @@
+{% extends "navigate.html" %}
+
+{% block title %}
+Избранные объявления
+{% endblock %}
+
+{% block content %}
+<main style="margin-bottom: 30px; color: white">
+    <div class="container mt-4">
+        <h2 class="mb-4">Избранные объявления</h2>
+        <div class="row">
+            {% for favorite in favorites %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    {% if favorite.ad.image %}
+                    <img src="{{ favorite.ad.image.url }}" class="card-img-top" alt="{{ favorite.ad.title }}">
+                    {% else %}
+                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Нет фото">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ favorite.ad.title }}</h5>
+                        <p class="card-text">{{ favorite.ad.description|truncatechars:100 }}</p>
+                        <a href="{% url 'detail' favorite.ad.id %}" class="btn btn-primary">Подробнее</a>
+                        <form method="post" action="{% url 'remove_fav' favorite.ad.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger mt-3">Удалить из избранного</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>У вас нет избранных объявлений.</p>
+            {% endfor %}
+        </div>
+    </div> 
+</main>
+{% endblock %}

@@ -41,9 +41,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=15)
     avatar = CloudinaryField('Аватар', blank=True, null=True) 
-
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='user')
-
     is_banned = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
