@@ -34,11 +34,22 @@
                             <p><strong>Email:</strong> {{ ad.user.email }}</p>
                         </div>
                     </div>
-                    {% if request.user.is_authenticated  and ad.user == request.user %}
-                        <div class="card-footer d-flex justify-content-between">
-                            <a class="btn btn-info w-50 me-2" href="{% url 'ad_edit' ad.id %}">Редактировать</a>
-                            <a class="btn btn-danger w-50" href="{% url 'ad_delete' ad.id %}">Удалить</a>
-                        </div>
+                    {% if request.user.is_authenticated %}
+                        {% if ad.user == request.user %}
+                            <div class="card-footer d-flex justify-content-between">
+                                <a class="btn btn-info w-50 me-2" href="{% url 'ad_edit' ad.id %}">Редактировать</a>
+                                <a class="btn btn-danger w-50" href="{% url 'ad_delete' ad.id %}">Удалить</a>
+                            </div>
+                        {% else %}
+                            <div class="card-footer">
+                                <form method="post" action="{% url 'add_fav' ad.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-outline-danger w-100">
+                                        <i class="bi bi-heart"></i> Добавить в избранное
+                                    </button>
+                                </form>
+                            </div>
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>

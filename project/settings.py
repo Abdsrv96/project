@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'users',
     'ads',
     'search',
+    'favorites',
 ]
 
 MIDDLEWARE = [
@@ -107,6 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGIN_URL = 'login'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
